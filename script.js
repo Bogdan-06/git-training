@@ -40,6 +40,12 @@ const masini = {
     imagine: "poza7.jpg",
     tuning: ["Jante R17", "Fagura neagra", "Semnalizare dinamica", "Schimbat pompa de ulei", "Schimbat Turbina", "Parbriz spart"]
  },
+
+   "WBAZZZ99ZTS123456": {
+    model: "Audi A4 B6",
+    imagine: "poza8.jpg",
+    tuning: ["Jante R17", "Ochelar far de ceata lipsa", "Semnalizare dinamica", "Pompa servo urla", "Parbriz spart"]
+ },
 };
 
 function verificaVIN() {
