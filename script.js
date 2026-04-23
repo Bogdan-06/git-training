@@ -45,13 +45,7 @@ const masini = {
     model: "Audi A4 B6",
     imagine: "poza8.jpg",
     tuning: ["Jante R17", "Ochelar far de ceata lipsa", "Semnalizare dinamica", "Pompa servo urla", "Parbriz spart"]
- },
-
-  "WBAZZZ99ZTS123456": {
-    model: "Bogdan Boganescu",
-    imagine: "poza9.jpg",
-    tuning: ["Dragut", "Simpatic", "De treaba", "Amuzant", "Frumos"]
-  },  
+ }, 
 };
 
 function verificaVIN() {
