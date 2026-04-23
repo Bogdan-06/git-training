@@ -33,7 +33,13 @@ const masini = {
     model: "Volkswagen Passat B5.5",
     imagine: "poza6.jpg",
     tuning: ["Bate ceva, dar nu stim ce", "Volanta cu personalitate", "Chiuloasa are secrete", "Troacane premium", "Sunet de diesel autentic", "Verificat de vecinul mecanic"]
-},
+ },
+
+  "WVWZZZ1JZXW000123": {
+    model: "Audi A4 B7",
+    imagine: "poza7.jpg",
+    tuning: ["Jante R17", "Fagura neagra", "Semnalizare dinamica", "Schimbat pompa de ulei", "Schimbat Turbina", "Parbriz spart"]
+ },
 };
 
 function verificaVIN() {
