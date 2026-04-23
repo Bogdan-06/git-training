@@ -27,25 +27,7 @@ const masini = {
     model: "Ford Focus",
     imagine: "poza5.jpg",
     tuning: ["Remap ECU", "Filtru sport","Jante 19 inch","Body kit"]
-  },
-
-  "VW098765432109876": {
-    model: "Volkswagen Passat B5.5",
-    imagine: "poza6.jpg",
-    tuning: ["Bate ceva, dar nu stim ce", "Volanta cu personalitate", "Chiuloasa are secrete", "Troacane premium", "Sunet de diesel autentic", "Verificat de vecinul mecanic"]
- },
-
-  "WVWZZZ1JZXW000123": {
-    model: "Audi A4 B7",
-    imagine: "poza7.jpg",
-    tuning: ["Jante R17", "Fagura neagra", "Semnalizare dinamica", "Schimbat pompa de ulei", "Schimbat Turbina", "Parbriz spart"]
- },
-
-   "WBAZZZ99ZTS123456": {
-    model: "Audi A4 B6",
-    imagine: "poza8.jpg",
-    tuning: ["Jante R17", "Ochelar far de ceata lipsa", "Semnalizare dinamica", "Pompa servo urla", "Parbriz spart"]
- }, 
+  }
 };
 
 function verificaVIN() {
