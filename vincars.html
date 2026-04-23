@@ -2,23 +2,44 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
-  <title>VIN Tuning Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificare VIN</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <main>
+    <header>
+      <h1>🚗Verificare VIN</h1>
+      <h2>Introdu seria VIN pentru a vedea modelul si modificarile masinii</h2>
+    </header>
 
-  <h1>🚗 VIN Tuning Checker</h1>
+    <section class="container">
+      <input
+        type="text"
+        id="vin"
+        placeholder="Introdu VIN-ul (17 caractere)"
+        maxlength="17"
+        autocomplete="off"
+        spellcheck="false"
+      >
 
-  <div class="container">
-    <input type="text" id="vin" placeholder="Introdu VIN (17 caractere)">
-    <button onclick="verificaVIN()">Caută</button>
-    <button onclick="genereazaVIN()">Generează VIN</button>
-  </div>
+      <section class="container">
+      <input
+        type="text"
+        id="vin"
+        placeholder="Buton test"
+        autocomplete="off"
+        spellcheck="false"
+      >
 
-  <div id="rezultat" class="card"></div>
+      <button type="button" onclick="verificaVIN()">Verifica VIN</button>
+      <button type="button" onclick="genereazaVIN()">Genereaza VIN</button>
+    </section>
 
-  <!-- 🔊 sunet motor -->
-  <audio id="engineSound" src="https://www.fesliyanstudios.com/play-mp3/387"></audio>
+    <section class="card" id="rezultat" aria-live="polite"></section>
+  </main>
+
+  <audio id="engineSound" src="engine.mp3" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
