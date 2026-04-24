@@ -52,38 +52,56 @@ function verificaVIN() {
   const vin = document.getElementById("vin").value.trim();
   const rezultat = document.getElementById("rezultat");
   const sunet = document.getElementById("engineSound");
+  const loader = document.getElementById("loader");
 
   rezultat.classList.remove("show");
 
+  // 🔥 arată loader
+  loader.classList.add("show");
+  rezultat.innerHTML = "";
+
   // 🔹 Validare VIN
   if (vin.length !== 17) {
-    rezultat.innerHTML = "<p>⚠️ VIN invalid (trebuie să aibă 17 caractere)</p>";
-    rezultat.classList.add("show");
+    setTimeout(() => {
+      loader.classList.remove("show");
+      rezultat.innerHTML = "<p>⚠️ VIN invalid (trebuie să aibă 17 caractere)</p>";
+      rezultat.classList.add("show");
+    }, 1000);
     return;
   }
 
-  if (masini[vin]) {
-    let masina = masini[vin];
-
-    // 🔊 redă sunet
-    sunet.currentTime = 0;
-    sunet.play();
-
-    rezultat.innerHTML = `
-      <h2>${masina.model}</h2>
-      <img src="${masina.imagine}">
-      <p>🔧 Modificări implemetate:</p>
-      <ul>
-        ${masina.tuning.map(t => `<li>${t}</li>`).join("")}
-      </ul>
-    `;
-  } else {
-    rezultat.innerHTML = "<p>❌ VIN necunoscut</p>";
-  }
-
   setTimeout(() => {
-    rezultat.classList.add("show");
-  }, 100);
+
+    if (masini[vin]) {
+      let masina = masini[vin];
+
+      // 🔊 sunet
+      sunet.currentTime = 0;
+      sunet.play();
+
+      rezultat.innerHTML = `
+        <h2>${masina.model}</h2>
+        <img src="${masina.imagine}" class="loading">
+        <p>🔧 Modificări implementate:</p>
+        <ul>
+          ${masina.tuning.map(t => `<li>${t}</li>`).join("")}
+        </ul>
+      `;
+    } else {
+      rezultat.innerHTML = "<p>❌ VIN necunoscut</p>";
+    }
+
+    loader.classList.remove("show");
+
+    setTimeout(() => {
+      rezultat.classList.add("show");
+
+      const img = document.querySelector("#rezultat img");
+      if (img) img.classList.remove("loading");
+
+    }, 100);
+
+  }, 2000);
 }
 
 //////////////////////////////////////////////////////

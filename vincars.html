@@ -13,28 +13,27 @@
       <h2>Introdu seria VIN pentru a vedea modelul si modificarile masinii</h2>
     </header>
 
-    <section class="container">
-      <input
-        type="text"
-        id="vin"
-        placeholder="Introdu VIN-ul (17 caractere)"
-        maxlength="17"
-        autocomplete="off"
-        spellcheck="false"
-      >
+   <section class="container">
 
-      <section class="container">
-      <input
-        type="text"
-        id="vin"
-        placeholder="Buton test"
-        autocomplete="off"
-        spellcheck="false"
-      >
+  <input
+    type="text"
+    id="vin"
+    placeholder="Introdu VIN-ul (17 caractere)"
+    maxlength="17"
+    autocomplete="off"
+    spellcheck="false"
+  >
 
-      <button type="button" onclick="verificaVIN()">Verifica VIN</button>
-      <button type="button" onclick="genereazaVIN()">Genereaza VIN</button>
-    </section>
+  <button type="button" onclick="verificaVIN()">Verifica VIN</button>
+  <button type="button" onclick="genereazaVIN()">Genereaza VIN</button>
+
+  <!-- 🔥 LOADER AICI -->
+  <div id="loader" class="loader">
+    <div class="spinner"></div>
+    <p>🔍 Se caută mașina după seria de șasiu...</p>
+  </div>
+
+</section>
 
     <section class="card" id="rezultat" aria-live="polite"></section>
   </main>
