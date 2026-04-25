@@ -32,21 +32,56 @@ const masini = {
   "VW098765432109876": {
     model: "Volkswagen Passat B5.5",
     imagine: "poza6.jpg",
-    tuning: ["Bate ceva, dar nu stim ce", "Volanta cu personalitate", "Chiuloasa are secrete", "Troacane premium", "Sunet de diesel autentic", "Verificat de vecinul mecanic"]
- },
+    tuning: ["Bate ceva, dar nu stim ce", "Volanta cu personalitate", "Chiuloasa are secrete"]
+  },
 
   "WVWZZZ1JZXW000123": {
     model: "Audi A4 B7",
     imagine: "poza7.jpg",
-    tuning: ["Jante R17", "Fagura neagra", "Semnalizare dinamica", "Schimbat pompa de ulei", "Schimbat Turbina", "Parbriz spart"]
- },
+    tuning: ["Jante R17", "Fagura neagra", "Semnalizare dinamica"]
+  },
 
-   "WBAZZZ99ZTS123456": {
+  "WBAZZZ99ZTS123456": {
     model: "Audi A4 B6",
     imagine: "poza8.jpg",
-    tuning: ["Jante R17", "Ochelar far de ceata lipsa", "Semnalizare dinamica", "Pompa servo urla", "Parbriz spart"]
- }, 
+    tuning: ["Jante R17", "Ochelar far de ceata lipsa", "Pompa servo urla"]
+  }
 };
+
+//////////////////////////////////////////////////////
+// 🔥 DIAGNOSTIC DEFECTE RANDOM (ADĂUGAT)
+//////////////////////////////////////////////////////
+
+const defectePosibile = [
+  "⚠️ Uzură turbo detectată",
+  "⚠️ Presiune ulei scăzută",
+  "⚠️ Plăcuțe frână uzate",
+  "⚠️ Senzor ABS defect",
+  "⚠️ Vibrații motor la relanti",
+  "⚠️ Pierdere mică de boost",
+  "⚠️ Consum ulei crescut",
+  "✅ Motor în parametri normali"
+];
+
+function genereazaDefecte() {
+  let lista = [];
+  let nr = Math.floor(Math.random() * 4); // 0–3 defecte
+
+  for (let i = 0; i < nr; i++) {
+    const defect = defectePosibile[Math.floor(Math.random() * (defectePosibile.length - 1))];
+    lista.push(defect);
+  }
+
+  if (lista.length === 0) {
+    lista.push("✅ Motor perfect, fără probleme detectate");
+  }
+
+  return lista;
+}
+
+//////////////////////////////////////////////////////
+// 🔧 VERIFICARE VIN
+//////////////////////////////////////////////////////
 
 function verificaVIN() {
   const vin = document.getElementById("vin").value.trim();
@@ -55,16 +90,13 @@ function verificaVIN() {
   const loader = document.getElementById("loader");
 
   rezultat.classList.remove("show");
-
-  // 🔥 arată loader
   loader.classList.add("show");
   rezultat.innerHTML = "";
 
-  // 🔹 Validare VIN
   if (vin.length !== 17) {
     setTimeout(() => {
       loader.classList.remove("show");
-      rezultat.innerHTML = "<p>⚠️ VIN invalid (trebuie să aibă 17 caractere)</p>";
+      rezultat.innerHTML = "<p>⚠️ VIN invalid (trebuie 17 caractere)</p>";
       rezultat.classList.add("show");
     }, 1000);
     return;
@@ -75,16 +107,23 @@ function verificaVIN() {
     if (masini[vin]) {
       let masina = masini[vin];
 
-      // 🔊 sunet
+      const defecte = genereazaDefecte();
+
       sunet.currentTime = 0;
       sunet.play();
 
       rezultat.innerHTML = `
         <h2>${masina.model}</h2>
         <img src="${masina.imagine}" class="loading">
+
         <p>🔧 Modificări implementate:</p>
         <ul>
           ${masina.tuning.map(t => `<li>${t}</li>`).join("")}
+        </ul>
+
+        <p>🧪 Diagnostic:</p>
+        <ul>
+          ${defecte.map(d => `<li>${d}</li>`).join("")}
         </ul>
       `;
     } else {
@@ -105,7 +144,7 @@ function verificaVIN() {
 }
 
 //////////////////////////////////////////////////////
-// 🔥 VIN GENERATOR
+// 🔥 VIN GENERATOR (nemodificat)
 //////////////////////////////////////////////////////
 
 function genereazaVIN() {
