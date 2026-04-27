@@ -1,49 +1,49 @@
 const masini = {
   "WBA12345678901234": {
     model: "BMW Seria 3",
-    imagine: "poza1.jpg",
+    imagine: "images/poza1.jpg",
     tuning: ["Stage 1 - +40HP", "Evacuare sport", "Jante 18 inch"]
   },
 
   "VW456789012345678": {
     model: "Volkswagen Golf 5",
-    imagine: "poza2.jpg",
+    imagine: "images/poza2.jpg",
     tuning: ["Soft motor", "Suspensie sport", "Body kit"]
   },
 
   "WAU98765432109876": {
     model: "Audi A4",
-    imagine: "poza3.jpg",
+    imagine: "images/poza3.jpg",
     tuning: ["Stage 2", "Turbo upgrade", "Jante 20 inch","Bodykit"]
   },
 
   "WDB11122233344455": {
     model: "Mercedes C-Class",
-    imagine: "poza4.jpg",
+    imagine: "images/poza4.jpg",
     tuning: ["AMG kit", "Evacuare sport","Jante 20 inch"]
   },
 
   "WF012345678901234": {
     model: "Ford Focus",
-    imagine: "poza5.jpg",
+    imagine: "images/poza5.jpg",
     tuning: ["Remap ECU", "Filtru sport","Jante 19 inch","Body kit"]
   },
 
   "VW098765432109876": {
     model: "Volkswagen Passat B5.5",
-    imagine: "poza6.jpg",
+    imagine: "images/poza6.jpg",
     tuning: ["Bate ceva, dar nu stim ce", "Volanta cu personalitate", "Chiuloasa are secrete"]
   },
 
   "WVWZZZ1JZXW000123": {
     model: "Audi A4 B7",
-    imagine: "poza7.jpg",
+    imagine: "images/poza7.jpg",
     tuning: ["Jante R17", "Fagura neagra", "Semnalizare dinamica"]
   },
 
   "WBAZZZ99ZTS123456": {
     model: "Audi A4 B6",
-    imagine: "poza8.jpg",
+    imagine: "images/poza8.jpg",
     tuning: ["Jante R17", "Ochelar far de ceata lipsa", "Pompa servo urla"]
   }
 };

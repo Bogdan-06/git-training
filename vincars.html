@@ -3,39 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verificare VIN</title>
+  <title>VIN Cars | Verificare VIN</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <header>
-      <h1>🚗Verificare VIN</h1>
-      <h2>Introdu seria VIN pentru a vedea modelul si modificarile masinii</h2>
-    </header>
+  <main class="site-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero__content">
+        <p class="eyebrow">Proiect auto pentru școală</p>
+        <h1 id="page-title">VIN Cars</h1>
+        <h2>Verifică modelul, modificările și diagnosticul mașinii după seria de șasiu.</h2>
+      </div>
 
-   <section class="container">
+      <div class="hero__meta" aria-label="Detalii despre verificare">
+        <span>VIN 17 caractere</span>
+        <span>Modele salvate</span>
+        <span>Diagnostic rapid</span>
+      </div>
+    </section>
 
-  <input
-    type="text"
-    id="vin"
-    placeholder="Introdu VIN-ul (17 caractere)"
-    maxlength="17"
-    autocomplete="off"
-    spellcheck="false"
-  >
+    <section class="scanner" aria-label="Formular verificare VIN">
+      <div class="scanner__header">
+        <div>
+          <p class="eyebrow">Scanner VIN</p>
+          <h2>Introdu seria de șasiu</h2>
+        </div>
+        <span class="status-pill">Online</span>
+      </div>
 
-  <button type="button" onclick="verificaVIN()">Verifica VIN</button>
-  <button type="button" onclick="genereazaVIN()">Genereaza VIN</button>
+      <div class="form-grid">
+        <label class="input-field" for="vin">
+          <span>Seria VIN</span>
+          <input
+            type="text"
+            id="vin"
+            placeholder="Ex: WBA12345678901234"
+            maxlength="17"
+            autocomplete="off"
+            spellcheck="false"
+            autocapitalize="characters"
+          >
+        </label>
 
-  <!-- 🔥 LOADER AICI -->
-  <div id="loader" class="loader">
-    <div class="spinner"></div>
-    <p>🔍 Se caută mașina după seria de șasiu...</p>
-  </div>
+        <div class="button-row">
+          <button class="button button--primary" type="button" onclick="verificaVIN()">Verifică VIN</button>
+          <button class="button button--ghost" type="button" onclick="genereazaVIN()">Generează VIN</button>
+        </div>
+      </div>
 
-</section>
+      <div class="examples" aria-label="Exemple VIN">
+        <span>Teste rapide</span>
+        <button type="button" onclick="document.getElementById('vin').value='WBA12345678901234'">BMW Seria 3</button>
+        <button type="button" onclick="document.getElementById('vin').value='WAU98765432109876'">Audi A4</button>
+        <button type="button" onclick="document.getElementById('vin').value='WDB11122233344455'">Mercedes C-Class</button>
+      </div>
 
-    <section class="card" id="rezultat" aria-live="polite"></section>
+      <div id="loader" class="loader" role="status" aria-live="polite">
+        <div class="spinner"></div>
+        <p>Se caută mașina după seria de șasiu...</p>
+      </div>
+    </section>
+
+    <section class="card result-card" id="rezultat" aria-live="polite"></section>
   </main>
 
   <audio id="engineSound" src="engine.mp3" preload="auto"></audio>
