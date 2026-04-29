@@ -50,7 +50,8 @@ body::before {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
 }
 
@@ -156,6 +157,14 @@ p {
   margin-bottom: 20px;
 }
 
+.scanner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .scanner__header h2 {
   margin-top: 5px;
   font-size: 1.6rem;
@@ -208,17 +217,37 @@ input {
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-input::placeholder {
+textarea {
+  width: 100%;
+  min-height: 108px;
+  resize: vertical;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  outline: none;
+  color: var(--text);
+  background: rgba(4, 7, 11, 0.75);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.45;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
   color: var(--text-muted);
   text-transform: none;
 }
 
-input:hover {
+input:hover,
+textarea:hover {
   border-color: rgba(255, 255, 255, 0.3);
   background: rgba(7, 11, 17, 0.92);
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   border-color: var(--accent-2);
   box-shadow: 0 0 0 4px rgba(35, 213, 200, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
@@ -242,6 +271,12 @@ input:focus {
   font-size: 0.94rem;
   font-weight: 900;
   white-space: nowrap;
+}
+
+.button--small {
+  min-height: 38px;
+  padding: 0 12px;
+  font-size: 0.82rem;
 }
 
 .button--primary {
@@ -290,6 +325,69 @@ input:focus {
   color: var(--text-soft);
   background: rgba(255, 255, 255, 0.07);
   border-color: rgba(255, 255, 255, 0.12);
+}
+
+.add-car-panel {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid rgba(35, 213, 200, 0.28);
+  border-radius: 8px;
+  background: rgba(5, 8, 13, 0.62);
+}
+
+.add-car-panel[hidden] {
+  display: none;
+}
+
+.add-car-panel__header {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.add-car-panel h3 {
+  margin: 5px 0 0;
+  font-size: 1.18rem;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.add-car-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.add-car-grid__wide {
+  grid-column: 1 / -1;
+}
+
+.add-car-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.add-car-actions .button {
+  min-width: 160px;
+}
+
+.form-message {
+  min-height: 22px;
+  margin-top: 12px;
+  color: var(--text-soft);
+  font-weight: 800;
+}
+
+.form-message--success {
+  color: var(--accent-2);
+}
+
+.form-message--error {
+  color: #ffb0a8;
 }
 
 .loader {
@@ -461,6 +559,14 @@ img.loading {
     grid-template-columns: 1fr;
   }
 
+  .scanner__actions {
+    justify-content: flex-start;
+  }
+
+  .add-car-grid {
+    grid-template-columns: 1fr;
+  }
+
   .button {
     width: 100%;
     white-space: normal;
@@ -514,6 +620,18 @@ img.loading {
 
   .status-pill {
     justify-self: start;
+  }
+
+  .add-car-panel__header {
+    display: grid;
+  }
+
+  .add-car-actions {
+    display: grid;
+  }
+
+  .add-car-actions .button {
+    width: 100%;
   }
 
   .card {
