@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIN Cars | Verificare VIN</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="site-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero__content">
+        <p class="eyebrow">Proiect auto pentru școală</p>
+        <h1 id="page-title">VIN Cars</h1>
+        <h2>Verifică modelul, modificările și diagnosticul mașinii după seria de șasiu.</h2>
+      </div>
+
+      <div class="hero__meta" aria-label="Detalii despre verificare">
+        <span>VIN 17 caractere</span>
+        <span>Modele salvate</span>
+        <span>Diagnostic rapid</span>
+      </div>
+    </section>
+
+    <section class="scanner" aria-label="Formular verificare VIN">
+      <div class="scanner__header">
+        <div>
+          <p class="eyebrow">Scanner VIN</p>
+          <h2>Introdu seria de șasiu</h2>
+        </div>
+        <div class="scanner__actions">
+          <span class="status-pill">Online</span>
+          <button class="button button--small button--ghost" type="button" onclick="toggleCarForm()">Adauga masina</button>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <label class="input-field" for="vin">
+          <span>Seria VIN</span>
+          <input
+            type="text"
+            id="vin"
+            placeholder="Ex: WBA12345678901234"
+            maxlength="17"
+            autocomplete="off"
+            spellcheck="false"
+            autocapitalize="characters"
+          >
+        </label>
+
+        <div class="button-row">
+          <button class="button button--primary" type="button" onclick="verificaVIN()">Verifică VIN</button>
+          <button class="button button--ghost" type="button" onclick="genereazaVIN()">Generează VIN</button>
+        </div>
+      </div>
+
+      <div class="examples" aria-label="Exemple VIN">
+        <span>Teste rapide</span>
+        <button type="button" onclick="document.getElementById('vin').value='WBA12345678901234'">BMW Seria 3</button>
+        <button type="button" onclick="document.getElementById('vin').value='WAU98765432109876'">Audi A4</button>
+        <button type="button" onclick="document.getElementById('vin').value='WDB11122233344455'">Mercedes C-Class</button>
+      </div>
+
+      <section class="add-car-panel" id="addCarPanel" aria-label="Adauga masina noua" hidden>
+        <div class="add-car-panel__header">
+          <div>
+            <p class="eyebrow">Catalog personal</p>
+            <h3>Adauga o masina</h3>
+          </div>
+          <button class="button button--small button--ghost" type="button" onclick="toggleCarForm(false)">Inchide</button>
+        </div>
+
+        <div class="add-car-grid">
+          <label class="input-field" for="newVin">
+            <span>Seria VIN</span>
+            <input
+              type="text"
+              id="newVin"
+              placeholder="17 caractere"
+              maxlength="17"
+              autocomplete="off"
+              spellcheck="false"
+              autocapitalize="characters"
+            >
+          </label>
+
+          <label class="input-field" for="newModel">
+            <span>Model</span>
+            <input type="text" id="newModel" placeholder="Ex: Mazda 6">
+          </label>
+
+          <label class="input-field add-car-grid__wide" for="newImage">
+            <span>Imagine</span>
+            <input type="text" id="newImage" placeholder="Ex: images/poza9.jpeg sau un URL">
+          </label>
+
+          <label class="input-field add-car-grid__wide" for="newTuning">
+            <span>Modificari / observatii</span>
+            <textarea id="newTuning" placeholder="Scrie fiecare modificare pe rand nou"></textarea>
+          </label>
+        </div>
+
+        <div class="add-car-actions">
+          <button class="button button--primary" type="button" onclick="adaugaMasina()">Salveaza masina</button>
+          <button class="button button--ghost" type="button" onclick="curataFormularMasina()">Curata</button>
+        </div>
+
+        <p class="form-message" id="addCarMessage" aria-live="polite"></p>
+      </section>
+
+      <div id="loader" class="loader" role="status" aria-live="polite">
+        <div class="spinner"></div>
+        <p>Se caută mașina după seria de șasiu...</p>
+      </div>
+    </section>
+
+    <section class="card result-card" id="rezultat" aria-live="polite"></section>
+  </main>
+
+  <audio id="engineSound" src="engine.mp3" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
