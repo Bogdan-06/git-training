@@ -48,6 +48,69 @@ const masini = {
   }
 };
 
+const VIN_CARS_STORAGE_KEY = "vinCarsMasiniSalvate";
+const vinuriDinScript = new Set(Object.keys(masini));
+
+function normalizareVIN(vin) {
+  return vin.trim().toUpperCase();
+}
+
+function esteVINValid(vin) {
+  return /^[A-Z0-9]{17}$/.test(vin);
+}
+
+function esteMasinaValida(vin, masina) {
+  return (
+    esteVINValid(vin) &&
+    masina &&
+    typeof masina.model === "string" &&
+    typeof masina.imagine === "string" &&
+    Array.isArray(masina.tuning)
+  );
+}
+
+function citesteMasiniSalvate() {
+  if (typeof localStorage === "undefined") {
+    return {};
+  }
+
+  try {
+    const masiniSalvate = JSON.parse(localStorage.getItem(VIN_CARS_STORAGE_KEY)) || {};
+
+    return Object.fromEntries(
+      Object.entries(masiniSalvate).filter(([vin, masina]) => !vinuriDinScript.has(vin) && esteMasinaValida(vin, masina))
+    );
+  } catch (error) {
+    localStorage.removeItem(VIN_CARS_STORAGE_KEY);
+    return {};
+  }
+}
+
+function salveazaMasiniSalvate(masiniSalvate) {
+  localStorage.setItem(VIN_CARS_STORAGE_KEY, JSON.stringify(masiniSalvate));
+}
+
+function incarcaMasiniSalvate() {
+  const masiniSalvate = citesteMasiniSalvate();
+
+  Object.entries(masiniSalvate).forEach(([vin, masina]) => {
+    if (!vinuriDinScript.has(vin)) {
+      masini[vin] = masina;
+    }
+  });
+}
+
+function escapeHTML(text) {
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+incarcaMasiniSalvate();
+
 //////////////////////////////////////////////////////
 // 🔥 DIAGNOSTIC DEFECTE RANDOM (ADĂUGAT)
 //////////////////////////////////////////////////////
@@ -84,16 +147,18 @@ function genereazaDefecte() {
 //////////////////////////////////////////////////////
 
 function verificaVIN() {
-  const vin = document.getElementById("vin").value.trim();
+  const vinInput = document.getElementById("vin");
+  const vin = normalizareVIN(vinInput.value);
   const rezultat = document.getElementById("rezultat");
   const sunet = document.getElementById("engineSound");
   const loader = document.getElementById("loader");
 
+  vinInput.value = vin;
   rezultat.classList.remove("show");
   loader.classList.add("show");
   rezultat.innerHTML = "";
 
-  if (vin.length !== 17) {
+  if (!esteVINValid(vin)) {
     setTimeout(() => {
       loader.classList.remove("show");
       rezultat.innerHTML = "<p>⚠️ VIN invalid (trebuie 17 caractere)</p>";
@@ -109,21 +174,27 @@ function verificaVIN() {
 
       const defecte = genereazaDefecte();
 
-      sunet.currentTime = 0;
-      sunet.play();
+      if (sunet) {
+        sunet.currentTime = 0;
+        const playPromise = sunet.play();
+
+        if (playPromise) {
+          playPromise.catch(() => {});
+        }
+      }
 
       rezultat.innerHTML = `
-        <h2>${masina.model}</h2>
-        <img src="${masina.imagine}" class="loading">
+        <h2>${escapeHTML(masina.model)}</h2>
+        <img src="${escapeHTML(masina.imagine)}" class="loading">
 
         <p>🔧 Modificări implementate:</p>
         <ul>
-          ${masina.tuning.map(t => `<li>${t}</li>`).join("")}
+          ${masina.tuning.map(t => `<li>${escapeHTML(t)}</li>`).join("")}
         </ul>
 
         <p>🧪 Diagnostic:</p>
         <ul>
-          ${defecte.map(d => `<li>${d}</li>`).join("")}
+          ${defecte.map(d => `<li>${escapeHTML(d)}</li>`).join("")}
         </ul>
       `;
     } else {
@@ -146,6 +217,85 @@ function verificaVIN() {
 //////////////////////////////////////////////////////
 // 🔥 VIN GENERATOR (nemodificat)
 //////////////////////////////////////////////////////
+
+function toggleCarForm(forceOpen) {
+  const panel = document.getElementById("addCarPanel");
+
+  if (!panel) {
+    return;
+  }
+
+  const shouldOpen = typeof forceOpen === "boolean" ? forceOpen : panel.hidden;
+  panel.hidden = !shouldOpen;
+
+  if (shouldOpen) {
+    document.getElementById("newVin").focus();
+  }
+}
+
+function curataFormularMasina(clearMessage = true) {
+  document.getElementById("newVin").value = "";
+  document.getElementById("newModel").value = "";
+  document.getElementById("newImage").value = "";
+  document.getElementById("newTuning").value = "";
+
+  if (clearMessage) {
+    seteazaMesajMasina("");
+  }
+}
+
+function seteazaMesajMasina(message, type = "") {
+  const messageElement = document.getElementById("addCarMessage");
+
+  if (!messageElement) {
+    return;
+  }
+
+  messageElement.textContent = message;
+  messageElement.className = `form-message ${type ? `form-message--${type}` : ""}`.trim();
+}
+
+function adaugaMasina() {
+  const vin = normalizareVIN(document.getElementById("newVin").value);
+  const model = document.getElementById("newModel").value.trim();
+  const imagine = document.getElementById("newImage").value.trim() || "images/poza9.jpeg";
+  const tuning = document.getElementById("newTuning").value
+    .split(/\n|,/)
+    .map(item => item.trim())
+    .filter(Boolean);
+
+  document.getElementById("newVin").value = vin;
+
+  if (!esteVINValid(vin)) {
+    seteazaMesajMasina("VIN-ul trebuie sa aiba exact 17 caractere, doar litere si cifre.", "error");
+    return;
+  }
+
+  if (!model) {
+    seteazaMesajMasina("Adauga modelul masinii.", "error");
+    return;
+  }
+
+  if (vinuriDinScript.has(vin)) {
+    seteazaMesajMasina("Acest VIN exista deja in script si ramane nemodificat.", "error");
+    return;
+  }
+
+  const masina = {
+    model,
+    imagine,
+    tuning: tuning.length ? tuning : ["Fara modificari introduse"]
+  };
+  const masiniSalvate = citesteMasiniSalvate();
+
+  masiniSalvate[vin] = masina;
+  salveazaMasiniSalvate(masiniSalvate);
+  masini[vin] = masina;
+
+  document.getElementById("vin").value = vin;
+  curataFormularMasina(false);
+  seteazaMesajMasina("Masina a fost salvata. VIN-ul este pregatit pentru verificare.", "success");
+}
 
 function genereazaVIN() {
   const caractere = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
